@@ -3,7 +3,6 @@
       layout:decorate="layouts/base">
 <head>
     <title>Liste des Entretiens</title>
-    <!-- Lien vers le CDN Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -13,7 +12,7 @@
 
         <!-- Si la liste d'entretiens est vide -->
         <div th:if="${entretiens == null or entretiens.isEmpty()}" class="alert alert-warning">
-            <p>Aucun entretien trouvé. <a href="/entretien/new" class="btn btn-primary">Créer un entretien</a></p>
+            <p>Aucun entretien trouvé.</p>
         </div>
 
         <!-- Table d'entretiens -->
@@ -26,7 +25,6 @@
                 <th>Statut</th>
                 <th>Recruteur</th>
                 <th>Candidat</th>
-                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -37,22 +35,12 @@
                 <td th:text="${entretien.statut}"></td>
                 <td th:text="${entretien.recruteur.nom}"></td>
                 <td th:text="${entretien.candidat.nom}"></td>
-                <td>
-                    <a th:href="@{/entretien/edit/{id}(id=${entretien.id})}" class="btn btn-warning btn-sm">Modifier</a>
-                    <a th:href="@{/entretien/delete/{id}(id=${entretien.id})}" class="btn btn-danger btn-sm">Supprimer</a>
-                </td>
             </tr>
             </tbody>
         </table>
-
-        <!-- Lien pour créer un nouvel entretien -->
-        <div class="text-center mt-3">
-            <a href="/entretien/new" class="btn btn-success">Créer un nouvel entretien</a>
-        </div>
     </div>
 </div>
 
-<!-- Lien vers le JS Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

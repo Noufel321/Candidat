@@ -1,0 +1,7 @@
+<form th:action="@{/auth/register}" th:object="${candidat}" method="post">
+  <label>Nom:</label> <input type="text" th:field="*{nom}" /><br/>
+  <label>Email:</label> <input type="email" th:field="*{email}" /><br/>
+  <label>Mot de passe:</label> <input type="password" th:field="*{motDePasse}" /><br/>
+  <label>CV Path:</label> <input type="text" th:field="*{cvPath}" /><br/>
+  <button type="submit">S'inscrire</button>
+</form>

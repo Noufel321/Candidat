@@ -1,17 +1,31 @@
 package com.example.master_app.services;
 
 import com.example.master_app.Repository.EntretienRepository;
+import com.example.master_app.entities.Candidat;
 import com.example.master_app.entities.Entretien;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EntretienService {
 
     @Autowired
     private EntretienRepository entretienRepository;
+
+    public List<Entretien> getEntretiensByCandidat(Candidat candidat) {
+        return entretienRepository.findByCandidat(candidat);
+    }
+
+    public List<Entretien> getEntretiensByCandidatId(int candidatId) {
+        return entretienRepository.findAll()
+                .stream()
+                .filter(e -> e.getCandidat().getId() == candidatId)
+                .collect(Collectors.toList());
+    }
+
 
     public List<Entretien> getAllEntretiens() {
         return entretienRepository.findAll();

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layouts/base">
+<head>
+    <meta charset="UTF-8">
+    <title>Mes Entretiens</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<section layout:fragment="content" class="px-4 py-10 bg-gray-50 min-h-screen">
+    <div class="max-w-6xl mx-auto bg-white shadow-md rounded-lg p-6">
+        <h2 class="text-3xl font-bold text-gray-800 mb-6 flex items-center">
+            <i class="fas fa-handshake mr-3 text-blue-600"></i> Mes Entretiens
+        </h2>
+
+        <!-- Table des entretiens -->
+        <div th:if="${entretiens != null and !entretiens.isEmpty()}">
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200 text-sm">
+                    <thead class="bg-gray-100 text-gray-700 font-semibold">
+                    <tr>
+                        <th class="px-4 py-3 text-left">Date</th>
+                        <th class="px-4 py-3 text-left">Lieu</th>
+                        <th class="px-4 py-3 text-left">Statut</th>
+                        <th class="px-4 py-3 text-left">Recruteur</th>
+                        <th class="px-4 py-3 text-left">Compte Rendu</th>
+                    </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                    <tr th:each="e : ${entretiens}" class="hover:bg-gray-50">
+                        <td class="px-4 py-2 text-gray-800" th:text="${#temporals.format(e.date, 'dd/MM/yyyy HH:mm')}">Date</td>
+                        <td class="px-4 py-2 text-gray-600" th:text="${e.lieu}">Lieu</td>
+                        <td class="px-4 py-2">
+                            <span th:classappend="|px-3 py-1 rounded-full text-xs font-medium
+                                ${e.statut.name() == 'CONFIRME' ? 'bg-green-100 text-green-700' :
+                                  e.statut.name() == 'EN_ATTENTE' ? 'bg-yellow-100 text-yellow-700' :
+                                  e.statut.name() == 'ANNULE' ? 'bg-red-100 text-red-700' :
+                                  e.statut.name() == 'TERMINE' ? 'bg-blue-100 text-blue-700' : ''}|"
+                                  th:text="${e.statut}">
+                            </span>
+                        </td>
+                        <td class="px-4 py-2 text-gray-700" th:text="${e.recruteur.nom}">Recruteur</td>
+                        <td class="px-4 py-2 text-gray-500" th:text="${e.compteRendu != null ? e.compteRendu : 'Non disponible'}">
+                            Compte Rendu
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Aucun entretien -->
+        <div th:if="${entretiens == null or entretiens.isEmpty()}" class="text-center mt-10">
+            <div class="text-gray-400 text-6xl mb-4">
+                <i class="far fa-calendar-times"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-700">Aucun entretien prévu</h3>
+            <p class="text-gray-500">Vous n’avez pas encore de rendez-vous enregistré.</p>
+            <a href="/entretien/new" class="mt-4 inline-block bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg text-sm">
+                <i class="fas fa-plus mr-2"></i>Planifier un entretien
+            </a>
+        </div>
+    </div>
+</section>
+</body>
+</html>

@@ -1,21 +1,9 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
-      layout:decorate="layouts/base">
-<head>
-    <title>Connexion</title>
-</head>
-<body>
-<div layout:fragment="content">
-    <h2>Connexion</h2>
-    <form th:action="@{/auth/login}" method="post">
-        <label>Email :</label>
-        <input type="email" name="email" required /><br/>
-        <label>Mot de passe :</label>
-        <input type="password" name="password" required /><br/>
-        <button type="submit">Se connecter</button>
-        <div th:if="${error}" th:text="${error}" style="color: red;"></div>
-    </form>
-    <p><a th:href="@{/auth/register}">S'inscrire</a></p>
-</div>
-</body>
-</html>
+<form method="post" action="/auth/login">
+    <input type="name" name="email" placeholder="Email">
+    <input type="password" name="motDePasse" placeholder="Mot de passe">
+    <select name="role">
+        <option value="CANDIDAT">Candidat</option>
+        <option value="RH">RH</option>
+    </select>
+    <button type="submit">Se connecter</button>
+</form>

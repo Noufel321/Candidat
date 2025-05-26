@@ -13,6 +13,7 @@ import java.util.Optional;
 @Repository
 public interface UtilisateurRepository extends JpaRepository<Utilisateur, Integer> {
     // Requête personnalisée pour trouver un utilisateur par email (utile pour l'authentification)
+   // Optional<Utilisateur> findByEmail(String email);
     Optional<Utilisateur> findByEmail(String email);
 
     // Requête personnalisée pour trouver tous les utilisateurs d'un rôle spécifique

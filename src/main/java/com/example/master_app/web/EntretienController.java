@@ -6,6 +6,7 @@ import com.example.master_app.entities.Recruteur;
 import com.example.master_app.services.EntretienService;
 import com.example.master_app.Repository.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -54,6 +55,41 @@ public class EntretienController {
         model.addAttribute("recruteurs", recruteurs);
         return "entretien/form";
     }
+
+
+
+
+
+
+    @GetMapping("/mes-entretiens")
+    public String getMesEntretiens(Model model) {
+        // Récupérer l'utilisateur connecté
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String email;
+
+        if (principal instanceof org.springframework.security.core.userdetails.UserDetails) {
+            email = ((org.springframework.security.core.userdetails.UserDetails) principal).getUsername();
+        } else {
+            email = principal.toString();
+        }
+
+        // Trouver le candidat par email
+        Candidat candidat = (Candidat) utilisateurRepository.findByEmail(email).orElse(null);
+        if (candidat == null) {
+            model.addAttribute("error", "Candidat non trouvé.");
+            return "redirect:/login";
+        }
+
+        // Chercher ses entretiens
+        List<Entretien> mesEntretiens = entretienService.getEntretiensByCandidat(candidat);
+        model.addAttribute("entretiens", mesEntretiens);
+        return "candidat/mes_entretiens"; // page à créer
+    }
+
+
+
+
+
 
     @PostMapping
     public String createEntretien(@ModelAttribute Entretien entretien, Model model) throws Exception {

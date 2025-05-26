@@ -10,7 +10,7 @@ public class Utilisateur {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id; // ✅ remplace "int" par "Integer"
 
     @Column(nullable = false)
     private String nom;
@@ -25,12 +25,10 @@ public class Utilisateur {
     @Column(nullable = false)
     private Role role;
 
-    // Constructeur par défaut
     public Utilisateur() {
     }
 
-    // Constructeur avec tous les champs
-    public Utilisateur(int id, String nom, String email, String motDePasse, Role role) {
+    public Utilisateur(Integer id, String nom, String email, String motDePasse, Role role) {
         this.id = id;
         this.nom = nom;
         this.email = email;
@@ -38,12 +36,16 @@ public class Utilisateur {
         this.role = role;
     }
 
-    // Getters et Setters
-    public int getId() {
+    public boolean isCandidat() {
+        return this instanceof Candidat;
+    }
+
+    // Getters & Setters
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

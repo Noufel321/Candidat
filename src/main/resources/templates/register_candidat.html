@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Inscription Candidat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #6b73ff 0%, #000dff 100%);
+        }
+        .input-focus:focus {
+            box-shadow: 0 0 0 3px rgba(107, 115, 255, 0.3);
+            border-color: #6b73ff;
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen flex items-center justify-center p-4">
+<div class="w-full max-w-md">
+    <div class="bg-white rounded-xl shadow-2xl overflow-hidden">
+        <div class="bg-indigo-600 py-4 px-6">
+            <h1 class="text-2xl font-bold text-white text-center">
+                <i class="fas fa-user-plus mr-2"></i> Inscription Candidat
+            </h1>
+        </div>
+
+        <form th:action="@{/candidat/register}" method="post" th:object="${candidat}" enctype="multipart/form-data" class="p-6 space-y-6">
+            <!-- Nom -->
+            <div class="space-y-1">
+                <label class="block text-sm font-medium text-gray-700">Nom <span class="text-red-500">*</span></label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-user text-gray-400"></i>
+                    </div>
+                    <input type="text" th:field="*{nom}" class="pl-10 input-focus w-full rounded-md border-gray-300 shadow-sm p-2 border" placeholder="Votre nom" required />
+                </div>
+            </div>
+
+            <!-- Email -->
+            <div class="space-y-1">
+                <label class="block text-sm font-medium text-gray-700">Email <span class="text-red-500">*</span></label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-envelope text-gray-400"></i>
+                    </div>
+                    <input type="email" th:field="*{email}" class="pl-10 input-focus w-full rounded-md border-gray-300 shadow-sm p-2 border" placeholder="exemple@email.com" required />
+                </div>
+            </div>
+
+            <!-- Mot de passe -->
+            <div class="space-y-1">
+                <label class="block text-sm font-medium text-gray-700">Mot de passe <span class="text-red-500">*</span></label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-lock text-gray-400"></i>
+                    </div>
+                    <input type="password" th:field="*{motDePasse}" id="password" class="pl-10 input-focus w-full rounded-md border-gray-300 shadow-sm p-2 border" placeholder="••••••••" required />
+                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                        <button type="button" onclick="togglePassword('password')" class="text-gray-400 hover:text-gray-500">
+                            <i class="fas fa-eye" id="eye-icon-password"></i>
+                        </button>
+                    </div>
+                </div>
+                <p class="text-xs text-gray-500 mt-1">Minimum 8 caractères</p>
+            </div>
+
+            <!-- Spécialité -->
+            <div class="space-y-1">
+                <label class="block text-sm font-medium text-gray-700">Spécialité</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-briefcase text-gray-400"></i>
+                    </div>
+                    <input type="text" th:field="*{specialite}" class="pl-10 input-focus w-full rounded-md border-gray-300 shadow-sm p-2 border" placeholder="Votre domaine" />
+                </div>
+            </div>
+
+            <!-- CV -->
+            <div class="space-y-1">
+                <label class="block text-sm font-medium text-gray-700">CV (PDF) <span class="text-red-500">*</span></label>
+                <label class="flex flex-col w-full h-32 border-2 border-dashed rounded-lg cursor-pointer hover:bg-gray-50">
+                    <div class="flex flex-col items-center justify-center pt-6">
+                        <i class="fas fa-file-pdf text-3xl text-red-500 mb-2"></i>
+                        <p class="text-sm text-gray-500">
+                            <span class="font-semibold">Glissez-déposez</span> ou cliquez
+                        </p>
+                        <p class="text-xs text-gray-500">PDF uniquement, max 5MB</p>
+                    </div>
+                    <input type="file" name="cvFile" class="hidden" accept=".pdf" required />
+                </label>
+                <div id="file-name" class="text-sm text-gray-500 mt-1 hidden"></div>
+            </div>
+
+            <!-- Conditions -->
+            <div class="flex items-center">
+                <input type="checkbox" id="terms" name="terms" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" required>
+                <label for="terms" class="ml-2 block text-sm text-gray-700">
+                    J'accepte les <a href="#" class="text-indigo-600 hover:text-indigo-500">conditions d'utilisation</a>
+                </label>
+            </div>
+
+            <!-- Bouton -->
+            <button type="submit" class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition-colors">
+                <i class="fas fa-user-plus mr-2"></i> S'inscrire
+            </button>
+
+            <!-- Lien Connexion -->
+            <div class="text-center text-sm text-gray-500">
+                Déjà inscrit ? <a href="/candidat" class="text-indigo-600 hover:text-indigo-500 font-medium">Connectez-vous</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function togglePassword(id) {
+        const field = document.getElementById(id);
+        const icon = document.getElementById('eye-icon-' + id);
+        if (field.type === 'password') {
+            field.type = 'text';
+            icon.classList.replace('fa-eye', 'fa-eye-slash');
+        } else {
+            field.type = 'password';
+            icon.classList.replace('fa-eye-slash', 'fa-eye');
+        }
+    }
+
+    document.querySelector('input[type="file"]').addEventListener('change', function (e) {
+        const name = e.target.files[0]?.name || 'Aucun fichier sélectionné';
+        const label = document.getElementById('file-name');
+        label.textContent = 'Fichier sélectionné : ' + name;
+        label.classList.remove('hidden');
+    });
+
+    document.querySelector('form').addEventListener('submit', function (e) {
+        const pass = document.getElementById('password').value;
+        if (pass.length < 8) {
+            alert('Le mot de passe doit contenir au moins 8 caractères');
+            e.preventDefault();
+        }
+        if (!document.getElementById('terms').checked) {
+            alert('Vous devez accepter les conditions');
+            e.preventDefault();
+        }
+    });
+</script>
+</body>
+</html>
